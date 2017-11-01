@@ -27,8 +27,24 @@ async function submitCode(driver) {
   await driver.findElement(By.css('input[type=submit]')).click();
 }
 
-const main = (async () => {
-  const driver = new webdriver.Builder().forBrowser('chrome').build();
+const createDriver = () => {
+  if (process.env.DIRVER === 'chrome') {
+    return new webdriver.Builder().forBrowser('chrome').build();
+  }
+  return new webdriver.Builder().forBrowser('phantomjs').build();
+}
+
+const main = async () => {
+  const driver = createDriver();
+  try {
+    await _main(driver)
+  } catch (e) {
+    await helpers.takeScreenshot(driver, 'error.png');
+    driver.quit();
+  }
+}
+
+const _main = async (driver) => {
 
   await driver.get(process.env.OKTA_URL);
 
@@ -38,7 +54,17 @@ const main = (async () => {
 
   await helpers.sleep(500);
   await submitCode(driver);
-});
+
+  await helpers.waitUtilCssSelector(driver, '.app-buttons-list');
+
+  const apps = await driver.findElements(By.css('.app-button-name'));
+
+  for (let i = 0; i < apps.length; i ++) {
+    const app = apps[i];
+    const text = await app.getText();
+    console.log(text);
+  }
+};
 
 (async () => {
   main();

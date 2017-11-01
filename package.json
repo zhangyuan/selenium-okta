@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "phantomjs-prebuilt": "^2.1.15",
     "selenium-webdriver": "^3.6.0",
     "speakeasy": "^2.0.0"
   }
