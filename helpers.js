@@ -48,6 +48,10 @@ const takeScreenshot = async (driver, filename) => {
   })
 }
 
+async function clickText(driver, text) {
+  await waitUtilXPathSelector(driver, `//*[contains(text(), '${text}')]`);
+  await (await driver.findElement(By.xpath(`//*[contains(text(), '${text}')]`))).click();
+}
 
 
 const sleep = async (ms) => {
@@ -59,5 +63,6 @@ const sleep = async (ms) => {
 module.exports = {
   waitUtilCssSelector,
   waitUtilXPathSelector,
+  clickText,
   sleep
 };
