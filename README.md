@@ -1,6 +1,9 @@
 # selenium-okta
 Example of sign in Okta with Google Authenticator by using selenium. Useful for automated tests.
 
+> Want to try puppeteer?
+Check out another repository: https://github.com/zhangyuan/puppeteer-okta
+
 ## Prerequisites
 
 Google Authenticated must be enabled and the shared secret key would be used to generate the multi factor authentication code.
